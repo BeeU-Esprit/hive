@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -45,7 +46,13 @@ public class AjoutTournoiController {
     @FXML
     void confirmerAjout(ActionEvent event) {
         try {
-            tournoiService.addEntity(new Tournoi(nom_tournoi.getText() ,liste_type.getValue(), Date.valueOf(date_tournoi.getValue()), trounoi_description.getText()));
+            Tournoi tournoi = new Tournoi(nom_tournoi.getText() ,liste_type.getValue(), Date.valueOf(date_tournoi.getValue()), trounoi_description.getText());
+            tournoiService.addEntity(tournoi);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Tournoi ajoutée avec succès");
+            alert.setContentText(tournoi.toString());
+            alert.show();
+            annulerAjout(event);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

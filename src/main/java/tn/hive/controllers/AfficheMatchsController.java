@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -60,24 +61,38 @@ public class AfficheMatchsController {
     @FXML
     void modifierMatch(ActionEvent event) {
 
-        int selected_match_id = tableview_match.getSelectionModel().getSelectedItem().getId_match();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierMatch.fxml"));
-        try {
-            Parent parent = loader.load();
-            ModifierMatchController modifierMatchController = loader.getController();
-            modifierMatchController.setId_match(selected_match_id);
-            tableview_match.getScene().setRoot(parent);
-        } catch (IOException e){
-            System.out.println(e.getMessage());
+        try{
+            int selected_match_id = tableview_match.getSelectionModel().getSelectedItem().getId_match();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierMatch.fxml"));
+            try {
+                Parent parent = loader.load();
+                ModifierMatchController modifierMatchController = loader.getController();
+                modifierMatchController.setId_match(selected_match_id);
+                tableview_match.getScene().setRoot(parent);
+            } catch (IOException e){
+                System.out.println(e.getMessage());
+            }
+        } catch(Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Slectionner un match");
+            alert.setContentText("Vous devez sélectionner une correspondance pour la modifier");
+            alert.show();
         }
 
     }
 
     @FXML
     void supprimerMatch(ActionEvent event) {
-        matchService.deleteEntity(tableview_match.getSelectionModel().getSelectedItem().getId_match());
-        tableview_match.getItems().clear();
-        refreshTableviewMatch();
+        try {
+            matchService.deleteEntity(tableview_match.getSelectionModel().getSelectedItem().getId_match());
+            tableview_match.getItems().clear();
+            refreshTableviewMatch();
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Slectionner un match");
+            alert.setContentText("Vous devez sélectionner une correspondance pour la supprimer");
+            alert.show();
+        }
     }
 
     public void refreshTableviewMatch(){

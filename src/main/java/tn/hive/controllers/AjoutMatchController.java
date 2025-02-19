@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -68,7 +69,14 @@ public class AjoutMatchController {
     @FXML
     void confirmerAjout(ActionEvent event) {
         try {
-            matchService.addEntity(new Match(liste_tournoi.getValue(), liste_equipe1.getValue(), liste_equipe2.getValue(), Date.valueOf(date_match.getValue()), liste_terrain.getValue(), Integer.parseInt(score1.getText()), Integer.parseInt(score2.getText()), liste_statut.getValue()));
+            Match match = new Match(liste_tournoi.getValue(), liste_equipe1.getValue(), liste_equipe2.getValue(), Date.valueOf(date_match.getValue()), liste_terrain.getValue(), Integer.parseInt(score1.getText()), Integer.parseInt(score2.getText()), liste_statut.getValue());
+            matchService.addEntity(match);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Match ajoutée avec succès");
+            alert.setContentText(match.toString());
+            alert.show();
+            annulerModification(event);
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

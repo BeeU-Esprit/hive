@@ -5,10 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import tn.hive.entities.Equipe;
 import tn.hive.entities.Match;
 import tn.hive.entities.Terrain;
@@ -20,6 +17,7 @@ import tn.hive.services.TournoiService;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,8 +75,21 @@ public class ModifierMatchController {
 
     @FXML
     void confirmerModification(ActionEvent event) {
-        matchService.updateEntity(id_match, new Match(liste_tournoi.getValue(), liste_equipe1.getValue(), liste_equipe2.getValue(), Date.valueOf(date_match.getValue()), liste_terrain.getValue(), Integer.parseInt(score1.getText()), Integer.parseInt(score2.getText()), liste_statut.getValue()));
-
+        try {
+            Match match = new Match(liste_tournoi.getValue(), liste_equipe1.getValue(), liste_equipe2.getValue(), Date.valueOf(date_match.getValue()), liste_terrain.getValue(), Integer.parseInt(score1.getText()), Integer.parseInt(score2.getText()), liste_statut.getValue());
+            matchService.updateEntity(id_match, match);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Match modifiée avec succès");
+            alert.setContentText(match.toString());
+            alert.show();
+            annulerModification(event);
+        }
+        catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Match modifiée avec succès");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 
 

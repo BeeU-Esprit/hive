@@ -5,10 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import tn.hive.entities.Equipe;
 import tn.hive.entities.Match;
 import tn.hive.entities.Terrain;
@@ -54,7 +51,20 @@ public class ModifierTournoiController {
 
     @FXML
     void confirmerModification(ActionEvent event) {
-        tournoiService.updateEntity(id_tournoi, new Tournoi(nom_tournoi.getText(), liste_type.getValue(), Date.valueOf(date_tournoi.getValue()), trounoi_description.getText()));
+        try {
+            Tournoi tournoi = new Tournoi(nom_tournoi.getText(), liste_type.getValue(), Date.valueOf(date_tournoi.getValue()), trounoi_description.getText());
+            tournoiService.updateEntity(id_tournoi, tournoi);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Tournoi modifiée avec succès");
+            alert.setContentText(tournoi.toString());
+            alert.show();
+            annulerAjout(event);
+        }catch ( Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Match modifiée avec succès");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 
     public void setId_tournoi(int id_tournoi) {
