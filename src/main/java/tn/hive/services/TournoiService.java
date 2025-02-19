@@ -1,5 +1,6 @@
 package tn.hive.services;
 
+import tn.hive.entities.Match;
 import tn.hive.entities.Tournoi;
 import tn.hive.interfaces.IService;
 import tn.hive.tools.MyConnection;
@@ -41,7 +42,17 @@ public class TournoiService implements IService<Tournoi> {
 
     @Override
     public void updateEntity(int id, Tournoi tournoi) {
-
+        String query = "UPDATE TOURNOI SET nom_tournoi=?, type_tournoi=?, date_tournoi=?, description_tournoi=? WHERE id_tournoi=?";
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            pst.setString(1, tournoi.getNom_tournoi());
+            pst.setString(2, tournoi.getType_tournoi());
+            pst.setDate(3, new java.sql.Date(tournoi.getDate_tournoi().getTime()));
+            pst.setString(4, tournoi.getDescription_tournoi());
+            pst.setInt(5, id);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -64,5 +75,25 @@ public class TournoiService implements IService<Tournoi> {
             System.out.println(e.getMessage());
         }
         return tournoiList;
+    }
+
+    public Tournoi getTournoiById(int id){
+        String query = "SELECT * FROM TOURNOI WHERE id_tournoi=?";
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                return new Tournoi(
+                        rs.getInt("id_tournoi"),
+                        rs.getString("nom_tournoi"),
+                        rs.getString("type_tournoi"),
+                        rs.getDate("date_tournoi"),
+                        rs.getString("description_tournoi")
+                );
+            }
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

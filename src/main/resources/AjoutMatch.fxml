@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,20 +14,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AjoutMatchController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.hive.controllers.AjoutMatchController">
    <children>
       <HBox prefHeight="400.0" prefWidth="600.0">
          <children>
             <VBox prefHeight="400.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox prefHeight="34.0" prefWidth="200.0">
+                  <HBox alignment="CENTER" prefHeight="34.0" prefWidth="200.0">
                      <children>
-                        <Label style="-fx-font-weight: 900;" text="CREATE A MATCH">
+                        <Label style="-fx-font-weight: 900;" text="AJOUTER MATCH" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                            <HBox.margin>
-                              <Insets left="51.0" top="3.0" />
+                              <Insets />
                            </HBox.margin>
                         </Label>
                      </children>
@@ -34,10 +37,13 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="28.0" prefWidth="200.0">
                      <children>
-                        <ComboBox fx:id="liste_tournoi" prefWidth="150.0" promptText="Tournament" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
+                        <ComboBox fx:id="liste_tournoi" prefWidth="150.0" promptText="Tournoi" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ComboBox>
                      </children>
                      <VBox.margin>
@@ -65,29 +71,76 @@
                         <Insets left="20.0" right="20.0" />
                      </padding>
                      <children>
-                        <ComboBox fx:id="liste_terrain" prefWidth="150.0" promptText="Field" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;" />
+                        <ComboBox fx:id="liste_terrain" prefWidth="150.0" promptText="Terrain" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
                      </children>
                   </HBox>
-                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="260.0" spacing="20.0">
+                  <HBox alignment="TOP_CENTER" prefHeight="76.0" prefWidth="260.0" spacing="20.0">
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ComboBox fx:id="liste_equipe1" prefWidth="150.0" promptText="Team 1" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
+                              <ComboBox fx:id="liste_equipe1" prefWidth="150.0" promptText="Equipe 1" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </ComboBox>
+                              <HBox alignment="CENTER" prefHeight="30.0" prefWidth="100.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Score" />
+                                    <TextField fx:id="score1" prefHeight="25.0" prefWidth="48.0" style="-fx-background-radius: 0;" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ComboBox fx:id="liste_equipe2" prefWidth="150.0" promptText="Team 2" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
+                              <ComboBox fx:id="liste_equipe2" prefWidth="150.0" promptText="Equipe 2" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </ComboBox>
+                              <HBox alignment="CENTER" prefHeight="30.0" prefWidth="100.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Score" />
+                                    <TextField fx:id="score2" prefHeight="25.0" prefWidth="48.0" style="-fx-background-radius: 0;" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="32.0" prefWidth="260.0">
+                     <children>
+                        <ComboBox fx:id="liste_statut" prefWidth="150.0" promptText="Statut" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ComboBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="32.0" prefWidth="260.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#confirmerAjout" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;" text="Ajouter">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#annulerModification" style="-fx-background-color: black; -fx-background-radius: 0;" text="Annuler" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                      <VBox.margin>
                         <Insets top="20.0" />

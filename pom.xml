@@ -44,7 +44,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>tn.hive.tests.mainFx</mainClass>
+                    <mainClass>tn.hive.tests.MainFx</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.hive.controllers.AfficheTournoisController">
+    <children>
+        <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="50.0">
+            <children>
+                <Label text="Liste Tournois">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="tableview_tournoi" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                        <TableColumn fx:id="tableview_tournoi_id" prefWidth="43.0" text="Id" />
+                        <TableColumn fx:id="tableview_tournoi_nom" prefWidth="77.0" text="Nom" />
+                        <TableColumn fx:id="tableview_tournoi_type" prefWidth="71.0" text="Type" />
+                        <TableColumn fx:id="tableview_tournoi_date" prefWidth="76.0" text="Date" />
+                        <TableColumn fx:id="tableview_tournoi_description" prefWidth="292.0" text="Description" />
+                    </columns>
+                </TableView>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#goToAjout" text="Ajouter" />
+                        <Button mnemonicParsing="false" onAction="#modifierTournoi" text="Modifier" />
+                        <Button mnemonicParsing="false" onAction="#supprimerTournoi" text="Supprimer" />
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

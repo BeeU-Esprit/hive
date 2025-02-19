@@ -86,4 +86,28 @@ public class MatchService implements IService<Match> {
         }
         return matchList;
     }
+
+    public Match getMatchById(int id){
+        String query = "SELECT * FROM `MATCH` WHERE id_match=?";
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+            return new Match(
+                    rs.getInt("id_match"),
+                    rs.getInt("id_tournoi"),
+                    rs.getInt("id_equipe1"),
+                    rs.getInt("id_equipe2"),
+                    rs.getDate("date_match"),
+                    rs.getInt("id_terrain"),
+                    rs.getInt("score_equipe1"),
+                    rs.getInt("score_equipe2"),
+                    rs.getString("statut_match")
+            );
+            }
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.hive.controllers.AfficheMatchsController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="50.0">
+         <children>
+            <Label text="Liste Matchs">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableview_match" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="tableview_match_id" prefWidth="43.0" text="Id" />
+                <TableColumn fx:id="tableview_match_tournoi" prefWidth="59.0" text="Tournoi" />
+                  <TableColumn fx:id="tableview_match_equipe1" prefWidth="64.0" text="Equipe 1" />
+                  <TableColumn fx:id="tableview_match_equipe2" prefWidth="71.0" text="Equipe 2" />
+                  <TableColumn fx:id="tableview_match_date" prefWidth="74.0" text="Date" />
+                  <TableColumn fx:id="tableview_match_score1" prefWidth="69.0" text="Score  1" />
+                  <TableColumn fx:id="tableview_match_score2" prefWidth="68.0" text="Score 2" />
+                  <TableColumn fx:id="tableview_match_statut" prefWidth="107.0" text="Statut" />
+              </columns>
+            </TableView>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#goToAjout" text="Ajouter" />
+                  <Button mnemonicParsing="false" onAction="#modifierMatch" text="Modifier" />
+                  <Button mnemonicParsing="false" onAction="#supprimerMatch" text="Supprimer" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
