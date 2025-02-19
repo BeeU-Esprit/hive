@@ -1,4 +1,4 @@
-package tn.hive.entities;
+package tn.hive.entities.tournoi_match;
 
 import java.sql.Date;
 

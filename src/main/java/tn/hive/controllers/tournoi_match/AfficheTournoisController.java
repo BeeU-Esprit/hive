@@ -1,4 +1,4 @@
-package tn.hive.controllers;
+package tn.hive.controllers.tournoi_match;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,9 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import tn.hive.entities.Match;
-import tn.hive.entities.Tournoi;
-import tn.hive.services.TournoiService;
+import tn.hive.entities.tournoi_match.Tournoi;
+import tn.hive.services.tournoi_match.TournoiService;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -41,7 +40,7 @@ public class AfficheTournoisController {
 
     @FXML
     void goToAjout(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjoutTournoi.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AjoutTournoi.fxml"));
         try {
             Parent parent = loader.load();
             tableview_tournoi.getScene().setRoot(parent);
@@ -54,7 +53,7 @@ public class AfficheTournoisController {
     void modifierTournoi(ActionEvent event) {
         try{
             int selected_tournoi_id = tableview_tournoi.getSelectionModel().getSelectedItem().getId_tournoi();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierTournoi.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/ModifierTournoi.fxml"));
             try {
                 Parent parent = loader.load();
                 ModifierTournoiController modifierTournoiController = loader.getController();

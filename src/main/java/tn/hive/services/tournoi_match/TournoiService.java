@@ -1,7 +1,6 @@
-package tn.hive.services;
+package tn.hive.services.tournoi_match;
 
-import tn.hive.entities.Match;
-import tn.hive.entities.Tournoi;
+import tn.hive.entities.tournoi_match.Tournoi;
 import tn.hive.interfaces.IService;
 import tn.hive.tools.MyConnection;
 

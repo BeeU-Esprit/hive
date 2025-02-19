@@ -1,4 +1,4 @@
-package tn.hive.controllers;
+package tn.hive.controllers.tournoi_match;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -9,8 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import tn.hive.entities.Tournoi;
-import tn.hive.services.TournoiService;
+import tn.hive.entities.tournoi_match.Tournoi;
+import tn.hive.services.tournoi_match.TournoiService;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -34,7 +34,7 @@ public class AjoutTournoiController {
 
     @FXML
     void annulerAjout(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficheTournois.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AfficheTournois.fxml"));
         try {
             Parent parent = loader.load();
             date_tournoi.getScene().setRoot(parent);

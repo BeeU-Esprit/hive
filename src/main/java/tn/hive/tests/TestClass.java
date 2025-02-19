@@ -1,15 +1,5 @@
 package tn.hive.tests;
 
-import tn.hive.entities.Equipe;
-import tn.hive.entities.Match;
-import tn.hive.entities.Terrain;
-import tn.hive.entities.Tournoi;
-import tn.hive.services.EquipeService;
-import tn.hive.services.MatchService;
-import tn.hive.services.TerrainService;
-import tn.hive.services.TournoiService;
-
-import java.sql.Date;
 import java.sql.SQLException;
 
 public class TestClass {

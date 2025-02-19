@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.hive.controllers.AjoutTournoiController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.hive.controllers.tournoi_match.ModifierTournoiController">
     <children>
         <HBox prefHeight="400.0" prefWidth="600.0">
             <children>
@@ -22,7 +22,7 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="34.0" prefWidth="200.0">
                             <children>
-                                <Label style="-fx-font-weight: 900;" text="AJOUTER TOURNOI" textAlignment="CENTER">
+                                <Label style="-fx-font-weight: 900;" text="MODIFIER TOURNOI" textAlignment="CENTER">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -30,6 +30,14 @@
                                         <Insets />
                                     </HBox.margin>
                                 </Label>
+                        <Label fx:id="tournoi_id_label" style="-fx-font-weight: 900;" text="0" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
                             </children>
                             <VBox.margin>
                                 <Insets top="12.0" />
@@ -82,7 +90,7 @@
                   </VBox>
                         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="260.0" spacing="10.0">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#confirmerAjout" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;" text="Ajouter">
+                                <Button mnemonicParsing="false" onAction="#confirmerModification" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;" text="Modifier">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -106,7 +114,7 @@
                     <children>
                         <ImageView fitHeight="393.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../../../../../Downloads/basketballcouroutline.png" />
+                                <Image url="@../../../../../../../../../Downloads/basketballcouroutline.png" />
                             </image>
                             <VBox.margin>
                                 <Insets />
