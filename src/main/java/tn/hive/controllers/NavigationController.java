@@ -23,7 +23,7 @@ public class NavigationController {
         String selected_page = page_select.getValue();
 
         if (selected_page != null){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/"+selected_page+".fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/"+selected_page+".fxml"));
             try {
                 Parent parent = loader.load();
                 page_navigator.getScene().setRoot(parent);
