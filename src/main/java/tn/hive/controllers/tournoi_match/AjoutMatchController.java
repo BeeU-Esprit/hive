@@ -9,6 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import tn.hive.entities.tournoi_match.Equipe;
 import tn.hive.entities.tournoi_match.Match;
 import tn.hive.entities.tournoi_match.Terrain;
@@ -50,6 +52,9 @@ public class AjoutMatchController {
     @FXML
     private TextField score2;
 
+    @FXML
+    private ImageView terrain_bg;
+
     MatchService matchService = new MatchService();
     TournoiService tournoiService = new TournoiService();
     TerrainService terrainService = new TerrainService();
@@ -79,6 +84,18 @@ public class AjoutMatchController {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void refreshImageTerrain(ActionEvent event){
+        try {
+            Tournoi tournoi = tournoiService.getTournoiById(liste_tournoi.getValue());
+            Image image = new Image(getClass().getResource("/images/backgrounds/" + tournoi.getType_tournoi() + ".png").toExternalForm());
+            terrain_bg.setImage(image);
+        }catch (Exception e) {
+            Image image = new Image(getClass().getResource("/images/backgrounds/Placeholder.png").toExternalForm());
+            terrain_bg.setImage(image);
         }
     }
 

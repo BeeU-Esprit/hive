@@ -101,6 +101,18 @@ public class ModifierMatchController {
 
     }
 
+    @FXML
+    public void refreshImageTerrain(ActionEvent event){
+        try {
+            Tournoi tournoi = tournoiService.getTournoiById(liste_tournoi.getValue());
+            Image image = new Image(getClass().getResource("/images/backgrounds/" + tournoi.getType_tournoi() + ".png").toExternalForm());
+            terrain_bg.setImage(image);
+        }catch (Exception e) {
+            Image image = new Image(getClass().getResource("/images/backgrounds/Placeholder.png").toExternalForm());
+            terrain_bg.setImage(image);
+        }
+    }
+
     public void refreshModifierMatch(){
         Match match = matchService.getMatchById(id_match);
         //titre
@@ -150,15 +162,6 @@ public class ModifierMatchController {
         liste_statut.setItems(FXCollections.observableArrayList("terminé","annulé","en cours", "pas commencé"));
         liste_statut.setValue(match.getStatut_match());
 
-        //terrain bg
-        try {
-            Tournoi tournoi = tournoiService.getTournoiById(liste_tournoi.getValue());
-            Image image = new Image(getClass().getResource("/images/backgrounds/" + tournoi.getType_tournoi() + ".png").toExternalForm());
-            terrain_bg.setImage(image);
-        }catch (Exception e) {
-            Image image = new Image(getClass().getResource("/images/backgrounds/Placeholder.png").toExternalForm());
-            terrain_bg.setImage(image);
-        }
 
     }
 }

@@ -9,6 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import tn.hive.entities.tournoi_match.Tournoi;
 import tn.hive.services.tournoi_match.TournoiService;
 
@@ -29,6 +32,9 @@ public class AjoutTournoiController {
 
     @FXML
     private TextField trounoi_description;
+
+    @FXML
+    private ImageView terrain_bg;
 
     TournoiService tournoiService = new TournoiService();
 
@@ -55,6 +61,17 @@ public class AjoutTournoiController {
             annulerAjout(event);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void refreshImageTerrain(ActionEvent event){
+        try {
+            Image image = new Image(getClass().getResource("/images/backgrounds/" + liste_type.getValue() + ".png").toExternalForm());
+            terrain_bg.setImage(image);
+        }catch (Exception e) {
+            Image image = new Image(getClass().getResource("/images/backgrounds/Placeholder.png").toExternalForm());
+            terrain_bg.setImage(image);
         }
     }
 
