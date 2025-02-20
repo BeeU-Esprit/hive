@@ -73,7 +73,10 @@ public class ModifierMatchController {
             Parent parent = loader.load();
             id_match_label.getScene().setRoot(parent);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec de navigation");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 
@@ -90,16 +93,12 @@ public class ModifierMatchController {
         }
         catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Match modifiée avec succès");
+            alert.setTitle("Veuillez remplir correctement le formulaire");
             alert.setContentText(e.getMessage());
             alert.show();
         }
     }
 
-
-    public void initialize(){
-
-    }
 
     @FXML
     public void refreshImageTerrain(ActionEvent event){

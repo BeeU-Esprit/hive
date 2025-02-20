@@ -45,7 +45,10 @@ public class AjoutTournoiController {
             Parent parent = loader.load();
             date_tournoi.getScene().setRoot(parent);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec de navigation");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 
@@ -59,8 +62,11 @@ public class AjoutTournoiController {
             alert.setContentText(tournoi.toString());
             alert.show();
             annulerAjout(event);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Veuillez remplir correctement le formulaire");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 
@@ -77,7 +83,6 @@ public class AjoutTournoiController {
 
     public void initialize(){
         liste_type.setItems(FXCollections.observableArrayList("Football", "Basketball", "Volley-ball", "Baseball", "Rugby", "Handball","Tennis", "Badminton", "Tennis de table", "Squash","Golf", "Bowling", "Bocce", "Croquet","Water-polo", "Dodgeball", "Sepak Takraw", "Lacrosse"));
-
     }
 
 }

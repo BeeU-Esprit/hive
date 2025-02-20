@@ -45,7 +45,10 @@ public class ModifierTournoiController {
             Parent parent = loader.load();
             date_tournoi.getScene().setRoot(parent);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec de navigation");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 
@@ -61,7 +64,7 @@ public class ModifierTournoiController {
             annulerAjout(event);
         }catch ( Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Match modifiée avec succès");
+            alert.setTitle("Veuillez remplir correctement le formulaire");
             alert.setContentText(e.getMessage());
             alert.show();
         }

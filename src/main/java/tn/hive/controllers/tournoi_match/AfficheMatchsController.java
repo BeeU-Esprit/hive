@@ -55,7 +55,10 @@ public class AfficheMatchsController {
             Parent parent = loader.load();
             tableview_match.getScene().setRoot(parent);
         } catch (IOException e){
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec de navigation");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 
@@ -71,12 +74,15 @@ public class AfficheMatchsController {
                 modifierMatchController.setId_match(selected_match_id);
                 tableview_match.getScene().setRoot(parent);
             } catch (IOException e){
-                System.out.println(e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Echec de navigation");
+                alert.setContentText(e.getMessage());
+                alert.show();
             }
         } catch(Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Slectionner un match");
-            alert.setContentText("Vous devez sélectionner une correspondance pour la modifier");
+            alert.setContentText("Vous devez sélectionner un match pour la modifier");
             alert.show();
         }
 
@@ -91,7 +97,7 @@ public class AfficheMatchsController {
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Slectionner un match");
-            alert.setContentText("Vous devez sélectionner une correspondance pour la supprimer");
+            alert.setContentText("Vous devez sélectionner un match pour la supprimer");
             alert.show();
         }
     }
@@ -129,7 +135,10 @@ public class AfficheMatchsController {
             Parent parent = loader.load();
             tableview_match.getScene().setRoot(parent);
         } catch (IOException e){
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec de navigation");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 }

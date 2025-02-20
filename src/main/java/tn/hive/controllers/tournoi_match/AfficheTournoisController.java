@@ -46,7 +46,10 @@ public class AfficheTournoisController {
             Parent parent = loader.load();
             tableview_tournoi.getScene().setRoot(parent);
         } catch (IOException e){
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec de navigation");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 
@@ -61,12 +64,15 @@ public class AfficheTournoisController {
                 modifierTournoiController.setId_tournoi(selected_tournoi_id);
                 tableview_tournoi.getScene().setRoot(parent);
             } catch (IOException e){
-                System.out.println(e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Echec de navigation");
+                alert.setContentText(e.getMessage());
+                alert.show();
             }
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Slectionner une tournoi");
-            alert.setContentText("Vous devez sélectionner une correspondance pour la modifier");
+            alert.setContentText("Vous devez sélectionner une tournoi pour la modifier");
             alert.show();
         }
     }
@@ -81,7 +87,7 @@ public class AfficheTournoisController {
         catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Slectionner une tournoi");
-            alert.setContentText("Vous devez sélectionner une correspondance pour la supprimer");
+            alert.setContentText("Vous devez sélectionner une tournoi pour la supprimer");
             alert.show();
         }
     }
@@ -109,8 +115,11 @@ public class AfficheTournoisController {
         try {
             Parent parent = loader.load();
             tableview_tournoi.getScene().setRoot(parent);
-        } catch (IOException e){
-            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec de navigation");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 

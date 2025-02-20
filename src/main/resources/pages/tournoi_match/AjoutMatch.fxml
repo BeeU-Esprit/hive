@@ -35,8 +35,13 @@
                         <Insets top="12.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="28.0" prefWidth="200.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="200.0" spacing="10.0">
                      <children>
+                        <Label prefHeight="17.0" text="Tournoi" textFill="#f2d33a">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                         <ComboBox fx:id="liste_tournoi" onAction="#refreshImageTerrain" prefWidth="150.0" promptText="Tournoi" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
                            <HBox.margin>
                               <Insets />
@@ -63,14 +68,16 @@
                         <Insets top="12.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="97.0" prefHeight="25.0" prefWidth="300.0" spacing="18.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="97.0" prefHeight="25.0" prefWidth="300.0" spacing="10.0">
                      <VBox.margin>
                         <Insets top="12.0" />
                      </VBox.margin>
-                     <padding>
-                        <Insets left="20.0" right="20.0" />
-                     </padding>
                      <children>
+                        <Label prefHeight="17.0" text="Terrain" textFill="#f2d33a">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                         <ComboBox fx:id="liste_terrain" prefWidth="150.0" promptText="Terrain" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -120,8 +127,13 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="32.0" prefWidth="260.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="260.0" spacing="10.0">
                      <children>
+                        <Label prefHeight="17.0" text="Terrain" textFill="#f2d33a">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                         <ComboBox fx:id="liste_statut" prefWidth="150.0" promptText="Statut" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
                            <cursor>
                               <Cursor fx:constant="HAND" />

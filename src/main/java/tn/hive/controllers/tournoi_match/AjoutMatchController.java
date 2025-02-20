@@ -67,7 +67,10 @@ public class AjoutMatchController {
             Parent parent = loader.load();
             date_match.getScene().setRoot(parent);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec de navigation");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 
@@ -82,8 +85,11 @@ public class AjoutMatchController {
             alert.show();
             annulerModification(event);
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Veuillez remplir correctement le formulaire");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 
@@ -127,6 +133,10 @@ public class AjoutMatchController {
 
         liste_equipe1.setItems(FXCollections.observableArrayList(equipeList));
         liste_equipe2.setItems(FXCollections.observableArrayList(equipeList));
+
+        //score
+        score1.setText("0");
+        score2.setText("0");
 
         //statut
         liste_statut.setItems(FXCollections.observableArrayList("terminé","annulé","en cours", "pas commencé"));
