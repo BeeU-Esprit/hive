@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import tn.hive.entities.tournoi_match.Match;
 import tn.hive.services.tournoi_match.MatchService;
 
@@ -114,5 +115,21 @@ public class AfficheMatchsController {
 
     public void initialize() {
         refreshTableviewMatch();
+    }
+
+    @FXML
+    void goToAfficheMatchs(MouseEvent event) {
+        refreshTableviewMatch();
+    }
+
+    @FXML
+    void goToAfficheTournois(MouseEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AfficheTournois.fxml"));
+        try {
+            Parent parent = loader.load();
+            tableview_match.getScene().setRoot(parent);
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

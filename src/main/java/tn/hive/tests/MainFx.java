@@ -16,13 +16,13 @@ public class MainFx extends Application {
 
     @Override
     public void start(Stage primaryStage) {   //pour charger premiere page a lancer
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Navigation.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AfficheTournois.fxml"));
 
         try {
             Parent  parent = loader.load();
             Scene scene = new Scene(parent);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Navigation");
+            primaryStage.setTitle("Liste des tournois");
             primaryStage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

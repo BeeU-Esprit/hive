@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import tn.hive.entities.tournoi_match.Tournoi;
 import tn.hive.services.tournoi_match.TournoiService;
 
@@ -102,4 +103,19 @@ public class AfficheTournoisController {
         refreshTableviewTournoi();
     }
 
+    @FXML
+    void goToAfficheMatchs(MouseEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AfficheMatchs.fxml"));
+        try {
+            Parent parent = loader.load();
+            tableview_tournoi.getScene().setRoot(parent);
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    void goToAfficheTournois(MouseEvent event) {
+        refreshTableviewTournoi();
+    }
 }
