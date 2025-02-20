@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import tn.hive.entities.tournoi_match.Tournoi;
 import tn.hive.services.tournoi_match.TournoiService;
 
@@ -28,6 +30,9 @@ public class ModifierTournoiController {
 
     @FXML
     private TextField trounoi_description;
+
+    @FXML
+    private ImageView terrain_bg;
 
     private int id_tournoi;
 
@@ -67,6 +72,17 @@ public class ModifierTournoiController {
         refreshModifierTournoi();
     }
 
+    @FXML
+    public void refreshImageTerrain(ActionEvent event){
+        try {
+            Image image = new Image(getClass().getResource("/images/backgrounds/" + liste_type.getValue() + ".png").toExternalForm());
+            terrain_bg.setImage(image);
+        }catch (Exception e) {
+            Image image = new Image(getClass().getResource("/images/backgrounds/Placeholder.png").toExternalForm());
+            terrain_bg.setImage(image);
+        }
+    }
+
     public void refreshModifierTournoi(){
         Tournoi tournoi = tournoiService.getTournoiById(id_tournoi);
         //titre
@@ -85,5 +101,6 @@ public class ModifierTournoiController {
 
         //description
         trounoi_description.setText(tournoi.getDescription_tournoi());
+
     }
 }

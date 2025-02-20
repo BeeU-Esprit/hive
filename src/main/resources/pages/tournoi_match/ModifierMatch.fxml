@@ -79,7 +79,7 @@
                                 <Insets left="20.0" right="20.0" />
                             </padding>
                             <children>
-                                <ComboBox fx:id="liste_terrain" prefWidth="150.0" promptText="Terrain" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
+                                <ComboBox fx:id="liste_terrain" onAction="#refreshImageTerrain" prefWidth="150.0" promptText="Terrain" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor></ComboBox>

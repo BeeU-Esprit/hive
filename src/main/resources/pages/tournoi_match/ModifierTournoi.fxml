@@ -71,7 +71,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="260.0">
                             <children>
-                                <ComboBox fx:id="liste_type" prefWidth="150.0" promptText="Type" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
+                                <ComboBox fx:id="liste_type" onAction="#refreshImageTerrain" prefWidth="150.0" promptText="Type" style="-fx-background-color: #F2D33A; -fx-background-radius: 0;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -112,7 +112,7 @@
                 </VBox>
                 <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" style="-fx-border-color: transparent transparent transparent #F2D33A;" HBox.hgrow="ALWAYS">
                     <children>
-                        <ImageView fitHeight="393.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="terrain_bg" fitHeight="393.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../../../../../../../../Downloads/basketballcouroutline.png" />
                             </image>
