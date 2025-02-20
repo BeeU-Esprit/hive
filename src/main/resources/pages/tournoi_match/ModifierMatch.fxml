@@ -161,9 +161,9 @@
                 </VBox>
                 <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" style="-fx-border-color: transparent transparent transparent #F2D33A;" HBox.hgrow="ALWAYS">
                     <children>
-                        <ImageView fitHeight="393.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="terrain_bg" fitHeight="393.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../../../../../../../Downloads/basketballcouroutline.png" />
+                                <Image url="@../../images/backgrounds/Basketball.png" />
                             </image>
                             <VBox.margin>
                                 <Insets />
