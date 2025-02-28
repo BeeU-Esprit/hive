@@ -35,11 +35,19 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#goToAfficheEquipes" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/icons/equipe.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
                </children>
             </VBox>
               <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="562.0" spacing="50.0">
                   <children>
-                      <Label text="Liste Tournois">
+                      <Label fx:id="titre_liste_tournois" text="Liste Tournois">
                           <font>
                               <Font name="System Bold" size="28.0" />
                           </font>

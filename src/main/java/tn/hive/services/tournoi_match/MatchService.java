@@ -110,4 +110,20 @@ public class MatchService implements IService<Match> {
         }
         return null;
     }
+
+    public boolean checkIfMatchExist(Match m){
+        String query = "SELECT * FROM `MATCH` WHERE id_equipe1=? AND id_equipe2=? AND date_match=?";
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            pst.setInt(1, m.getId_equipe1());
+            pst.setInt(2, m.getId_equipe2());
+            pst.setDate(3, new java.sql.Date(m.getDate_match().getTime()));
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
 }

@@ -1,41 +1,62 @@
 package tn.hive.controllers.tournoi_match;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import tn.hive.entities.tournoi_match.Equipe;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+import tn.hive.entities.equipe.Equipe;
 import tn.hive.entities.tournoi_match.Match;
 import tn.hive.entities.tournoi_match.Terrain;
 import tn.hive.entities.tournoi_match.Tournoi;
-import tn.hive.services.tournoi_match.EquipeService;
+import tn.hive.services.equipe.EquipeService;
 import tn.hive.services.tournoi_match.MatchService;
 import tn.hive.services.tournoi_match.TerrainService;
 import tn.hive.services.tournoi_match.TournoiService;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AjoutMatchController {
+
+    @FXML
+    private VBox error;
+
+    @FXML
+    private Label message;
 
     @FXML
     private DatePicker date_match;
 
     @FXML
-    private ComboBox<Integer> liste_equipe1;
+    private TableView<Equipe> liste_equipe1;
 
     @FXML
-    private ComboBox<Integer> liste_equipe2;
+    private TableColumn<Equipe, Integer> liste_equipe1_id;
+
+    @FXML
+    private TableColumn<Equipe, String> liste_equipe1_nom;
+
+    @FXML
+    private TableView<Equipe> liste_equipe2;
+
+    @FXML
+    private TableColumn<Equipe, Integer> liste_equipe2_id;
+
+    @FXML
+    private TableColumn<Equipe, String> liste_equipe2_nom;
 
     @FXML
     private ComboBox<String> liste_statut;
@@ -55,10 +76,27 @@ public class AjoutMatchController {
     @FXML
     private ImageView terrain_bg;
 
+    @FXML
+    private Button equipe1;
+
+    @FXML
+    private Button equipe2;
+
+
     MatchService matchService = new MatchService();
     TournoiService tournoiService = new TournoiService();
     TerrainService terrainService = new TerrainService();
     EquipeService equipeService = new EquipeService();
+
+
+    public static boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
     @FXML
     void annulerModification(ActionEvent event) {
@@ -77,21 +115,58 @@ public class AjoutMatchController {
     @FXML
     void confirmerAjout(ActionEvent event) {
         try {
-            Match match = new Match(liste_tournoi.getValue(), liste_equipe1.getValue(), liste_equipe2.getValue(), Date.valueOf(date_match.getValue()), liste_terrain.getValue(), Integer.parseInt(score1.getText()), Integer.parseInt(score2.getText()), liste_statut.getValue());
-            matchService.addEntity(match);
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Match ajoutée avec succès");
-            alert.setContentText(match.toString());
-            alert.show();
-            annulerModification(event);
-
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Veuillez remplir correctement le formulaire");
-            alert.setContentText(e.getMessage());
-            alert.show();
+            if (liste_tournoi.getValue()==null){
+                showError("Choisir un tournoi", "#F05A5A");
+            }
+            else if((date_match.getValue()==null)||(tournoiService.getTournoiById(liste_tournoi.getValue()).getDate_tournoi().compareTo(Date.valueOf(date_match.getValue()))>0)) {
+                showError("Choisir une date valide", "#F05A5A");
+            }
+            else if(liste_terrain.getValue()==null){
+                showError("Choisir une terrain", "#F05A5A");
+            }
+            else if(equipe1.getText().equals("Equipe 1") || equipe2.getText().equals("Equipe 2")){
+                showError("Choisir une equipe", "#F05A5A");
+            }
+            else if(equipe1.getText().equals(equipe2.getText())) {
+                showError("Vous ne pouvez pas choisir deux fois la même équipe", "#F05A5A");
+            }
+            else if(!isInteger(score1.getText()) || !isInteger(score2.getText())){
+                showError("Le score doit être un entier", "#F05A5A");
+            }
+            else if(Integer.parseInt(score1.getText()) < 0 || Integer.parseInt(score2.getText()) < 0){
+                showError("Le score doit être un entier positive", "#F05A5A");
+            }
+            else {
+                Match match = new Match(liste_tournoi.getValue(), Integer.parseInt(equipe1.getText()), Integer.parseInt(equipe2.getText()), Date.valueOf(date_match.getValue()), liste_terrain.getValue(), Integer.parseInt(score1.getText()), Integer.parseInt(score2.getText()), liste_statut.getValue());
+                if (!matchService.checkIfMatchExist(match)){
+                    matchService.addEntity(match);
+                    showError("Match ajoutée avec succès", "#66ffcc");
+                }
+                else {
+                    showError("Match existe déjà", "#F05A5A");
+                }
+            }
+        } catch (Exception e){
+            showError(e.getMessage(), "#F05A5A");
         }
     }
+
+
+    public void showError(String message, String color){
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        this.message.setText(message);
+        error.setStyle("-fx-background-color: " + color);
+        error.setVisible(true);
+        pause.setOnFinished(event -> {
+            error.setVisible(false);
+            if (color.equals("#66ffcc")) {
+                annulerModification(new ActionEvent());
+            }
+        });
+
+        pause.play();
+    }
+
 
     @FXML
     public void refreshImageTerrain(ActionEvent event){
@@ -103,6 +178,10 @@ public class AjoutMatchController {
             Image image = new Image(getClass().getResource("/images/backgrounds/Placeholder.png").toExternalForm());
             terrain_bg.setImage(image);
         }
+        date_match.setValue(tournoiService.getTournoiById(liste_tournoi.getValue()).getDate_tournoi().toLocalDate());
+        liste_equipe1.setVisible(false);
+        liste_equipe2.setVisible(false);
+        terrain_bg.setVisible(true);
     }
 
     public void initialize(){
@@ -125,14 +204,13 @@ public class AjoutMatchController {
         liste_terrain.setItems(FXCollections.observableArrayList(terrainList));
 
         //equipes
-        List<Integer> equipeList = new ArrayList<>();
+        List<String> equipeList = new ArrayList<>();
 
         for(Equipe equipe : equipeService.getAllData()){
-            equipeList.add(equipe.getId_equipe());
+            equipeList.add(equipe.getNom_equipe());
         }
 
-        liste_equipe1.setItems(FXCollections.observableArrayList(equipeList));
-        liste_equipe2.setItems(FXCollections.observableArrayList(equipeList));
+        //liste_equipe2.getItems().addAll(FXCollections.observableArrayList(equipeService.getAllData()));
 
         //score
         score1.setText("0");
@@ -140,5 +218,63 @@ public class AjoutMatchController {
 
         //statut
         liste_statut.setItems(FXCollections.observableArrayList("terminé","annulé","en cours", "pas commencé"));
+        liste_statut.setValue("pas commencé");
     }
+
+    @FXML
+    void afficheListeEquipe1(ActionEvent event) {
+        List<Equipe> equipeList = new ArrayList<>();
+
+        for(Equipe equipe : equipeService.getAllData()){
+            if (Objects.equals(equipe.getType_equipe(), tournoiService.getTournoiById(liste_tournoi.getValue()).getType_tournoi())){
+            equipeList.add(equipe);}
+        }
+
+        ObservableList<Equipe> equipeObservableList = FXCollections.observableArrayList(
+                equipeList
+        );
+
+        liste_equipe1_id.setCellValueFactory(new PropertyValueFactory<Equipe, Integer>("id_equipe"));
+        liste_equipe1_nom.setCellValueFactory(new PropertyValueFactory<Equipe, String>("nom_equipe"));
+        liste_equipe1.setItems(equipeObservableList);
+        liste_equipe1.setVisible(true);
+        terrain_bg.setVisible(false);
+        liste_equipe2.setVisible(false);
+        equipe1.setStyle("-fx-background-color: #F2D33A;-fx-text-fill: black;");
+        equipe2.setStyle("-fx-background-color: black; -fx-text-fill: white;");
+    }
+
+    @FXML
+    void afficheListeEquipe2(ActionEvent event) {
+        List<Equipe> equipeList = new ArrayList<>();
+
+        for(Equipe equipe : equipeService.getAllData()){
+            if (Objects.equals(equipe.getType_equipe(), tournoiService.getTournoiById(liste_tournoi.getValue()).getType_tournoi())){
+                equipeList.add(equipe);}
+        }
+
+        ObservableList<Equipe> equipeObservableList = FXCollections.observableArrayList(
+                equipeList
+        );
+
+        liste_equipe2_id.setCellValueFactory(new PropertyValueFactory<Equipe, Integer>("id_equipe"));
+        liste_equipe2_nom.setCellValueFactory(new PropertyValueFactory<Equipe, String>("nom_equipe"));
+        liste_equipe2.setItems(equipeObservableList);
+        liste_equipe2.setVisible(true);
+        terrain_bg.setVisible(false);
+        liste_equipe1.setVisible(false);
+        equipe2.setStyle("-fx-background-color: #F2D33A;-fx-text-fill: black");
+        equipe1.setStyle("-fx-background-color: black; -fx-text-fill: white");
+    }
+
+    @FXML
+    void updateEquipe1(MouseEvent event) {
+        equipe1.setText(Integer.toString(liste_equipe1.getSelectionModel().getSelectedItem().getId_equipe()));
+    }
+
+    @FXML
+    void updateEquipe2(MouseEvent event) {
+        equipe2.setText(Integer.toString(liste_equipe2.getSelectionModel().getSelectedItem().getId_equipe()));
+    }
+
 }

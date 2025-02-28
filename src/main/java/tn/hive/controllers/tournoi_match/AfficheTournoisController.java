@@ -7,11 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import tn.hive.entities.tournoi_match.Tournoi;
+import tn.hive.services.navigation.NavigationService;
 import tn.hive.services.tournoi_match.TournoiService;
 
 import java.io.IOException;
@@ -37,20 +39,15 @@ public class AfficheTournoisController {
     @FXML
     private TableColumn<Tournoi, String> tableview_tournoi_nom;
 
+    @FXML
+    private Label titre_liste_tournois;
+
     TournoiService tournoiService = new TournoiService();
+    NavigationService navigationService = new NavigationService();
 
     @FXML
     void goToAjout(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AjoutTournoi.fxml"));
-        try {
-            Parent parent = loader.load();
-            tableview_tournoi.getScene().setRoot(parent);
-        } catch (IOException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Echec de navigation");
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
+        navigationService.goToPage("/pages/tournoi_match/AjoutTournoi.fxml", titre_liste_tournois);
     }
 
     @FXML
@@ -111,20 +108,16 @@ public class AfficheTournoisController {
 
     @FXML
     void goToAfficheMatchs(MouseEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AfficheMatchs.fxml"));
-        try {
-            Parent parent = loader.load();
-            tableview_tournoi.getScene().setRoot(parent);
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Echec de navigation");
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
+        navigationService.goToPage("/pages/tournoi_match/AfficheMatchs.fxml", titre_liste_tournois);
     }
 
     @FXML
     void goToAfficheTournois(MouseEvent event) {
         refreshTableviewTournoi();
+    }
+
+    @FXML
+    void goToAfficheEquipes(MouseEvent event) {
+        navigationService.goToPage("/pages/equipe/AfficheEquipes.fxml", titre_liste_tournois);
     }
 }

@@ -1,6 +1,6 @@
-package tn.hive.services.tournoi_match;
+package tn.hive.services.equipe;
 
-import tn.hive.entities.tournoi_match.Equipe;
+import tn.hive.entities.equipe.Equipe;
 import tn.hive.interfaces.IService;
 import tn.hive.tools.MyConnection;
 
@@ -57,7 +57,8 @@ public class EquipeService implements IService<Equipe> {
             while (rs.next()){
                 Equipe equipe = new Equipe(
                         rs.getInt("id_equipe"),
-                        rs.getString("nom_equipe")
+                        rs.getString("nom_equipe"),
+                        rs.getString("type_equipe")
                 );
                 equipeList.add(equipe);
             }

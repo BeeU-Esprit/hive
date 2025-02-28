@@ -28,7 +28,5 @@ public class MainFx extends Application {
             throw new RuntimeException(e);
         }
 
-
-
     }
 }

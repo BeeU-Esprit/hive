@@ -7,11 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import tn.hive.entities.tournoi_match.Match;
+import tn.hive.services.navigation.NavigationService;
 import tn.hive.services.tournoi_match.MatchService;
 
 import java.io.IOException;
@@ -46,20 +48,15 @@ public class AfficheMatchsController {
     @FXML
     private TableColumn<Match, Integer> tableview_match_score2;
 
-    private MatchService matchService = new MatchService();
+    @FXML
+    private Label titre_liste_matchs;
+
+    private final MatchService matchService = new MatchService();
+    private final NavigationService navigationService = new NavigationService();
 
     @FXML
     void goToAjout(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AjoutMatch.fxml"));
-        try {
-            Parent parent = loader.load();
-            tableview_match.getScene().setRoot(parent);
-        } catch (IOException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Echec de navigation");
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
+        navigationService.goToPage("/pages/tournoi_match/AjoutMatch.fxml", titre_liste_matchs);
     }
 
     @FXML
@@ -130,15 +127,11 @@ public class AfficheMatchsController {
 
     @FXML
     void goToAfficheTournois(MouseEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/tournoi_match/AfficheTournois.fxml"));
-        try {
-            Parent parent = loader.load();
-            tableview_match.getScene().setRoot(parent);
-        } catch (IOException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Echec de navigation");
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
+        navigationService.goToPage("/pages/tournoi_match/AfficheTournois.fxml", titre_liste_matchs);
+    }
+
+    @FXML
+    void goToAfficheEquipes(MouseEvent event) {
+        navigationService.goToPage("/pages/equipe/AfficheEquipes.fxml", titre_liste_matchs);
     }
 }
