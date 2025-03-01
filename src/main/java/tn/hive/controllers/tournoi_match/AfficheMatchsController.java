@@ -1,23 +1,24 @@
 package tn.hive.controllers.tournoi_match;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import tn.hive.entities.tournoi_match.Match;
 import tn.hive.services.navigation.NavigationService;
 import tn.hive.services.tournoi_match.MatchService;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Optional;
 
 public class AfficheMatchsController {
 
@@ -51,6 +52,12 @@ public class AfficheMatchsController {
     @FXML
     private Label titre_liste_matchs;
 
+    @FXML
+    private VBox error;
+
+    @FXML
+    private Label message;
+
     private final MatchService matchService = new MatchService();
     private final NavigationService navigationService = new NavigationService();
 
@@ -71,31 +78,50 @@ public class AfficheMatchsController {
                 modifierMatchController.setId_match(selected_match_id);
                 tableview_match.getScene().setRoot(parent);
             } catch (IOException e){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Echec de navigation");
-                alert.setContentText(e.getMessage());
-                alert.show();
+                showError("Echec de navigation", "#F05A5A");
+
             }
         } catch(Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Slectionner un match");
-            alert.setContentText("Vous devez sélectionner un match pour la modifier");
-            alert.show();
+            showError("Slectionner un match", "#F05A5A");
         }
 
+    }
+
+    public void showError(String message, String color){
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        this.message.setText(message);
+        error.setStyle("-fx-background-color: " + color);
+        error.setVisible(true);
+        pause.setOnFinished(event -> {
+            error.setVisible(false);
+        });
+
+        pause.play();
     }
 
     @FXML
     void supprimerMatch(ActionEvent event) {
         try {
-            matchService.deleteEntity(tableview_match.getSelectionModel().getSelectedItem().getId_match());
-            tableview_match.getItems().clear();
-            refreshTableviewMatch();
+            if(tableview_match.getSelectionModel().getSelectedItem() != null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Confirmation");
+                alert.setContentText("Es-tu sûr de vouloir supprimer cette match?");
+                Optional<ButtonType> result = alert.showAndWait();
+                ButtonType button = result.orElse(ButtonType.CANCEL);
+
+                if (button == ButtonType.OK) {
+                    matchService.deleteEntity(tableview_match.getSelectionModel().getSelectedItem().getId_match());
+                    tableview_match.getItems().clear();
+                    refreshTableviewMatch();
+                } else {
+                    System.out.println("canceled");
+                }
+            }
+            else {
+                showError("Vous devez sélectionner un match pour la supprimer", "#F05A5A");
+            }
         }catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Slectionner un match");
-            alert.setContentText("Vous devez sélectionner un match pour la supprimer");
-            alert.show();
+            showError(e.getMessage(), "#F05A5A");
         }
     }
 
