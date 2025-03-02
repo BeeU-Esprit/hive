@@ -1,23 +1,21 @@
 package tn.hive.controllers.tournoi_match;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import tn.hive.entities.tournoi_match.Tournoi;
 import tn.hive.services.tournoi_match.TournoiService;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 
 public class AjoutTournoiController {
 
@@ -36,7 +34,27 @@ public class AjoutTournoiController {
     @FXML
     private ImageView terrain_bg;
 
+    @FXML
+    private VBox error;
+
+    @FXML
+    private Label message;
+
     TournoiService tournoiService = new TournoiService();
+
+    public void showError(String message, String color){
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        this.message.setText(message);
+        error.setStyle("-fx-background-color: " + color);
+        error.setVisible(true);
+        pause.setOnFinished(event -> {
+            error.setVisible(false);
+            if (color.equals("#66ffcc")) {
+                annulerAjout(new ActionEvent());
+            }
+        });
+        pause.play();
+    }
 
     @FXML
     void annulerAjout(ActionEvent event) {
@@ -45,28 +63,26 @@ public class AjoutTournoiController {
             Parent parent = loader.load();
             date_tournoi.getScene().setRoot(parent);
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Echec de navigation");
-            alert.setContentText(e.getMessage());
-            alert.show();
+            showError("Echec de navigation", "#F05A5A");
         }
     }
 
     @FXML
     void confirmerAjout(ActionEvent event) {
         try {
-            Tournoi tournoi = new Tournoi(nom_tournoi.getText() ,liste_type.getValue(), Date.valueOf(date_tournoi.getValue()), trounoi_description.getText());
-            tournoiService.addEntity(tournoi);
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Tournoi ajoutée avec succès");
-            alert.setContentText(tournoi.toString());
-            alert.show();
-            annulerAjout(event);
+            if(nom_tournoi.getText().isEmpty()){
+                showError("Le nom ne peut pas être vide", "#F05A5A");
+            } else if (date_tournoi.getValue()==null) {
+                showError("Veuillez choisir une date", "#F05A5A");
+            } else if (liste_type.getValue()==null) {
+                showError("Veuillez choisir une type de tournoi", "#F05A5A");
+            } else {
+                Tournoi tournoi = new Tournoi(nom_tournoi.getText(), liste_type.getValue(), Date.valueOf(date_tournoi.getValue()), trounoi_description.getText());
+                tournoiService.addEntity(tournoi);
+                showError("Tournoi ajoutée avec succès", "#66ffcc");
+            }
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Veuillez remplir correctement le formulaire");
-            alert.setContentText(e.getMessage());
-            alert.show();
+            showError("Veuillez remplir correctement le formulaire", "#F05A5A");
         }
     }
 

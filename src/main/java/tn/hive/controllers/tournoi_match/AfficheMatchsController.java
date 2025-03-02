@@ -9,9 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import tn.hive.controllers.components.MusicPlayer;
 import tn.hive.entities.tournoi_match.Match;
 import tn.hive.services.navigation.NavigationService;
 import tn.hive.services.tournoi_match.MatchService;
@@ -58,8 +61,53 @@ public class AfficheMatchsController {
     @FXML
     private Label message;
 
+    @FXML
+    private VBox music_player;
+
+    @FXML
+    private ImageView toggler;
+
+    @FXML
+    private ImageView play_button;
+
+    private final Image toggle_down = new Image(getClass().getResource("/images/icons/down.png").toExternalForm());
+    private final Image toggle_up = new Image(getClass().getResource("/images/icons/up.png").toExternalForm());
+    private final Image play = new Image(getClass().getResource("/images/icons/play.png").toExternalForm());
+    private final Image pause = new Image(getClass().getResource("/images/icons/pause.png").toExternalForm());
+
+
     private final MatchService matchService = new MatchService();
     private final NavigationService navigationService = new NavigationService();
+
+    public boolean playerVisible = true;
+    public boolean isPlaying = false;
+
+
+    @FXML
+    void togglePlayer(MouseEvent event) {
+        if (!MusicPlayer.getInstance().isHidden()) {
+            music_player.setLayoutY(-30);
+            toggler.setImage(toggle_down);
+        }
+        else {
+            music_player.setLayoutY(0);
+            toggler.setImage(toggle_up);
+        }
+        MusicPlayer.getInstance().setHidden(!MusicPlayer.getInstance().isHidden());
+    }
+
+    @FXML
+    void toggle_player_state(MouseEvent event) {
+        if (isPlaying){
+            play_button.setImage(pause);
+            MusicPlayer.getInstance().getMediaPlayer().play();
+        }
+        else {
+            play_button.setImage(play);
+            MusicPlayer.getInstance().getMediaPlayer().pause();
+        }
+        isPlaying = !isPlaying;
+    }
 
     @FXML
     void goToAjout(ActionEvent event) {
@@ -85,6 +133,11 @@ public class AfficheMatchsController {
             showError("Slectionner un match", "#F05A5A");
         }
 
+    }
+
+    @FXML
+    void playSong(MouseEvent event) {
+        MusicPlayer.getInstance().getMediaPlayer().play();
     }
 
     public void showError(String message, String color){
@@ -144,6 +197,18 @@ public class AfficheMatchsController {
 
     public void initialize() {
         refreshTableviewMatch();
+        if(MusicPlayer.getInstance().isPlaying()){
+            play_button.setImage(pause);
+        }
+        else{
+            play_button.setImage(play);
+        }
+        if (MusicPlayer.getInstance().isHidden()){
+            music_player.setLayoutY(-30);
+        }
+        else {
+            music_player.setLayoutY(0);
+        }
     }
 
     @FXML
